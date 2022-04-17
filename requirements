@@ -1,0 +1,6 @@
+ipykernel
+ipywidgets
+transformers
+datasets
+torchaudio
+jiwer
