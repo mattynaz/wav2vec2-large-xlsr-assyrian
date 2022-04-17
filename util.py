@@ -6,10 +6,12 @@ from datacollator import DataCollatorCTCWithPadding
 from vocab import vocab, normalize
 import torch
 import torchaudio
+from typing import Dict
+
 
 
 def load_processor(
-    vocab: dict[str, int] = vocab,
+    vocab: Dict[str, int] = vocab,
     unk_token: str = '[UNK]',
     pad_token: str = '[PAD]',
     word_delimiter_token: str = ' ',
