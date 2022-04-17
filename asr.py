@@ -35,8 +35,8 @@ model.gradient_checkpointing_enable()
 training_args = TrainingArguments(
       output_dir='./wav2vec2-nena',
       group_by_length=True,
-      per_device_train_batch_size=16,
-      gradient_accumulation_steps=2,
+      per_device_train_batch_size=4,
+      gradient_accumulation_steps=3,
       evaluation_strategy='steps',
       num_train_epochs=30,
       # fp16=True,
@@ -59,3 +59,5 @@ trainer = Trainer(
   )
 
 trainer.train()
+
+trainer.save_model()
