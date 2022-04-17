@@ -101,6 +101,7 @@ def load_nena_dataset(processor, data_files='nena_dataset.json', test_split=0.07
 
 
 wer_metric = load_metric('wer')
+cer_metric = load_metric('cer')
 
 def compute_metrics(pred, processor):
         pred_logits = torch.as_tensor(pred.predictions)
@@ -112,5 +113,6 @@ def compute_metrics(pred, processor):
         label_str = processor.batch_decode(pred.label_ids, group_tokens=False)
 
         wer = wer_metric.compute(predictions=pred_str, references=label_str)
+        cer = cer_metric.compute(predictions=pred_str, references=label_str)
 
-        return {"wer": wer}
+        return {'wer': wer, 'cer': cer}
