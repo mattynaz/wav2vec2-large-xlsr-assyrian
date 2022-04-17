@@ -3,13 +3,13 @@ import json
 from datasets import load_dataset, load_metric
 from transformers import Wav2Vec2FeatureExtractor, Wav2Vec2Processor, Wav2Vec2CTCTokenizer
 from datacollator import DataCollatorCTCWithPadding
-from vocab import normalize
+from vocab import vocab, normalize
 import torch
 import torchaudio
 
 
 def load_processor(
-    vocab: dict[str, int],
+    vocab: dict[str, int] = vocab,
     unk_token: str = '[UNK]',
     pad_token: str = '[PAD]',
     word_delimiter_token: str = ' ',
