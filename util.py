@@ -103,7 +103,7 @@ def load_nena_dataset(processor, data_files='nena_dataset.json', test_split=0.07
 wer_metric = load_metric('wer')
 
 def compute_metrics(pred, processor):
-        pred_logits = pred.predictions
+        pred_logits = torch.as_tensor(pred.predictions)
         pred_ids = torch.argmax(pred_logits, axis=-1)
 
         pred.label_ids[pred.label_ids == -100] = processor.tokenizer.pad_token_id
