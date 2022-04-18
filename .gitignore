@@ -4,10 +4,7 @@ venv
 
 # MacOS
 .DS_Store
-_tests.ipynb
-feature_extractor.ipynb
-plan.md
-processor
 
 # Large files
 wav2vec2-nena
+delete
