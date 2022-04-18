@@ -5,7 +5,7 @@ from util import *
 
 processor = load_processor()
 data_collator = load_data_collator(processor)
-dataset = load_nena_dataset(processor, duplicate_dataset=1, augment=False)
+dataset = load_nena_dataset(processor, duplicate_dataset=1, augment=True)
 compute_metrics = partial(compute_metrics, processor=processor)
 
 model_path = 'm3hrdadfi/wav2vec2-large-xlsr-persian-v3'
