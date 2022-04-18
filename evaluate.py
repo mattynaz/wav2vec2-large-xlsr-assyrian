@@ -1,5 +1,5 @@
 from util import load_processor
-from transformers import Wav2Vec2Processor, Wav2Vec2ForCTC
+from transformers import Wav2Vec2ForCTC
 import torch
 import torchaudio
 from vocab import restore

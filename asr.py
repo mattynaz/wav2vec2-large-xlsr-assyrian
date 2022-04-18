@@ -40,10 +40,10 @@ training_args = TrainingArguments(
       num_train_epochs=60,
       # fp16=True,
       save_steps=1000,
-      eval_steps=150,
+      eval_steps=100,
       logging_steps=10,
-      learning_rate=7e-3,
-      warmup_steps=500,
+      learning_rate=3e-3,
+      warmup_steps=250,
       save_total_limit=2,
   )
 
