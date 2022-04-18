@@ -5,7 +5,7 @@ from util import *
 
 processor = load_processor()
 data_collator = load_data_collator(processor)
-dataset = load_nena_dataset(processor, duplicate_dataset=1, augment=True)
+dataset = load_nena_dataset(processor)
 compute_metrics = partial(compute_metrics, processor=processor)
 
 model_path = 'm3hrdadfi/wav2vec2-large-xlsr-persian-v3'
@@ -37,11 +37,11 @@ training_args = TrainingArguments(
       per_device_train_batch_size=12,
       gradient_accumulation_steps=4,
       evaluation_strategy='steps',
-      num_train_epochs=75,
+      num_train_epochs=100,
       fp16=True,
       save_steps=1000,
-      eval_steps=5,
-      logging_steps=5,
+      eval_steps=10,
+      logging_steps=50,
       learning_rate=4e-3,
       warmup_ratio=0.20,
       save_total_limit=2,

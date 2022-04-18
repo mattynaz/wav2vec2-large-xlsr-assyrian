@@ -69,8 +69,9 @@ def load_data_collator(processor):
 def load_nena_dataset(processor, data_files='nena_dataset.json', augment=True, duplicate_dataset=1, test_split=0.075):
     # Initialize dataset
     dataset = load_dataset('json', data_files=data_files)
-    copies = [deepcopy(dataset['train']) for _ in range(duplicate_dataset)]
-    dataset['train'] = concatenate_datasets(copies)
+    if duplicate_dataset > 1:
+        copies = [deepcopy(dataset['train']) for _ in range(duplicate_dataset)]
+        dataset['train'] = concatenate_datasets(copies)
 
     augments = Compose([
         Gain(min_gain_in_db=-12, max_gain_in_db=6, p=1.0),
