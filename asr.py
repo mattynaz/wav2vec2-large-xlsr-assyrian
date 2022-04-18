@@ -44,7 +44,7 @@ training_args = TrainingArguments(
       save_steps=1000,
       eval_steps=50,
       logging_steps=10,
-      learning_rate=4e-3,
+      learning_rate=3e-4,
       warmup_ratio=0.20,
       save_total_limit=2,
   )

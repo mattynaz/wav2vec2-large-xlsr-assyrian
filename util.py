@@ -74,11 +74,11 @@ def load_nena_dataset(processor, data_files='nena_dataset.json', augment=True, d
         dataset['train'] = concatenate_datasets(copies)
 
     augments = Compose([
-        Gain(min_gain_in_db=-12, max_gain_in_db=6, p=1.0),
-        PitchShift(min_semitones=-8, max_semitones=1, p=0.75),
-        TimeStretch(min_rate=0.70, max_rate=1.20, p=0.5),
+        Gain(min_gain_in_db=-12, max_gain_in_db=6, p=0.75),
+        PitchShift(min_semitones=-6, max_semitones=1, p=0.75),
+        TimeStretch(min_rate=0.70, max_rate=1.20, p=0.75),
         RoomSimulator(p=0.25),
-        AddGaussianNoise(min_amplitude=0.001, max_amplitude=0.01, p=1),
+        AddGaussianNoise(min_amplitude=0.001, max_amplitude=0.008, p=0.75),
     ])
 
     # Prepare and split dataset
