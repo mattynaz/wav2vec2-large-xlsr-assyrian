@@ -34,16 +34,16 @@ model.gradient_checkpointing_enable()
 training_args = TrainingArguments(
       output_dir='./wav2vec2-nena',
       group_by_length=True,
-      per_device_train_batch_size=12,
-      gradient_accumulation_steps=4,
+      per_device_train_batch_size=48,
+      gradient_accumulation_steps=1,
       evaluation_strategy='steps',
       num_train_epochs=80,
       fp16=True,
       save_steps=1000,
-      eval_steps=100,
+      eval_steps=50,
       logging_steps=10,
       learning_rate=3e-3,
-      warmup_steps=250,
+      warmup_steps=200,
       save_total_limit=2,
   )
 
