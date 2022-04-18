@@ -1,63 +1,31 @@
+from util import load_processor
+from transformers import Wav2Vec2Processor, Wav2Vec2ForCTC
 import torch
-from functools import partial
-from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor, TrainingArguments, Trainer
-from util import *
-
-processor = load_processor()
-data_collator = load_data_collator(processor)
-dataset = load_nena_dataset(processor)
-compute_metrics = partial(compute_metrics, processor=processor)
+import torchaudio
+from vocab import restore
 
 model_path = 'm3hrdadfi/wav2vec2-large-xlsr-persian-v3'
 output_dir = './wav2vec2-nena'
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-print(model_path, device)
+processor = load_processor()
+model = Wav2Vec2ForCTC.from_pretrained(model_path)
+state_dict = torch.load('wav2vec2-nena/pytorch_model.bin', map_location='cpu')
+model.load_state_dict(state_dict)
 
-processor = Wav2Vec2Processor.from_pretrained(model_path)
-model = Wav2Vec2ForCTC.from_pretrained(model_path).to(device)
+path = 'eval.wav'
+waveform, sample_rate = torchaudio.load(path)
+resample_rate = 16_000
+resample = torchaudio.transforms.Resample(
+        orig_freq=sample_rate,
+        new_freq=resample_rate
+    )
+waveform = resample(waveform)
 
-model = Wav2Vec2ForCTC.from_pretrained(
-    model_path, 
-    attention_dropout=0.1,
-    hidden_dropout=0.1,
-    feat_proj_dropout=0.0,
-    mask_time_prob=0.05,
-    layerdrop=0.1,
-    ctc_loss_reduction='mean', 
-    pad_token_id=processor.tokenizer.pad_token_id,
-    vocab_size=len(processor.tokenizer)
-)
+features = processor(waveform[0], sampling_rate=16_000, return_tensors='pt', padding=True).input_values
 
-model.freeze_feature_extractor()
-model.gradient_checkpointing_enable()
+with torch.no_grad():
+    logits = model(features).logits
 
-training_args = TrainingArguments(
-      output_dir='./wav2vec2-nena',
-      group_by_length=True,
-      per_device_train_batch_size=8,
-      gradient_accumulation_steps=2,
-      evaluation_strategy='steps',
-      num_train_epochs=30,
-      # fp16=True,
-      save_steps=500,
-      eval_steps=100,
-      logging_steps=10,
-      learning_rate=3e-3,
-      warmup_steps=250,
-      save_total_limit=2,
-  )
+pred_ids = torch.argmax(logits, dim=-1)
 
-trainer = Trainer(
-      model=model,
-      data_collator=data_collator,
-      args=training_args,
-      compute_metrics=compute_metrics,
-      train_dataset=dataset['train'],
-      eval_dataset=dataset['test'],
-      tokenizer=processor.feature_extractor,
-  )
-
-trainer.train()
-
-trainer.save_model()
+print(restore(processor.batch_decode(pred_ids)[0]))
