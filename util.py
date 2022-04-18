@@ -1,12 +1,15 @@
 import os
 import json
-from datasets import load_dataset, load_metric
+from datasets import load_dataset, load_metric, concatenate_datasets
 from transformers import Wav2Vec2FeatureExtractor, Wav2Vec2Processor, Wav2Vec2CTCTokenizer
 from datacollator import DataCollatorCTCWithPadding
 from vocab import vocab, normalize
 import torch
 import torchaudio
 from typing import Dict
+from audiomentations import *
+import numpy as np
+from copy import deepcopy
 
 
 
@@ -63,14 +66,29 @@ def load_data_collator(processor):
     return data_collator
 
 
-def load_nena_dataset(processor, data_files='nena_dataset.json', test_split=0.075):
+def load_nena_dataset(processor, data_files='nena_dataset.json', augment=True, duplicate_dataset=1, test_split=0.075):
     # Initialize dataset
     dataset = load_dataset('json', data_files=data_files)
+    copies = [deepcopy(dataset['train']) for _ in range(duplicate_dataset)]
+    dataset['train'] = concatenate_datasets(copies)
+
+    augments = Compose([
+        Gain(min_gain_in_db=-12, max_gain_in_db=6, p=1.0),
+        PitchShift(min_semitones=-8, max_semitones=1, p=0.75),
+        TimeStretch(min_rate=0.70, max_rate=1.20, p=0.5),
+        RoomSimulator(p=0.25),
+        AddGaussianNoise(min_amplitude=0.001, max_amplitude=0.01, p=1),
+    ])
 
     # Prepare and split dataset
     def prepare(item):
         waveform, sample_rate = torchaudio.load(item['path'])
-        resample_rate = 16_000
+
+        if augment:
+            waveform = augments(np.array(waveform), sample_rate=sample_rate)
+            waveform = torch.as_tensor(waveform)
+
+        resample_rate = 16000
         resample = torchaudio.transforms.Resample(
                 orig_freq=sample_rate,
                 new_freq=resample_rate
