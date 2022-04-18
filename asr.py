@@ -27,10 +27,10 @@ model = Wav2Vec2ForCTC.from_pretrained(
     pad_token_id=processor.tokenizer.pad_token_id,
     vocab_size=len(processor.tokenizer)
 )
-state_dict = torch.load('wav2vec2-nena/pytorch_model.bin', map_location='cpu')
+state_dict = torch.load('wav2vec2-nena/pytorch_model_13_aug.bin', map_location='cpu')
 model.load_state_dict(state_dict)
 
-model.freeze_feature_extractor()
+model.freeze_feature_encoder()
 model.gradient_checkpointing_enable()
 
 training_args = TrainingArguments(

@@ -4,6 +4,7 @@ import torch
 import torchaudio
 from vocab import restore
 
+
 model_path = 'm3hrdadfi/wav2vec2-large-xlsr-persian-v3'
 output_dir = './wav2vec2-nena'
 
