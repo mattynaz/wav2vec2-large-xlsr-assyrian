@@ -50,8 +50,9 @@ compute_metrics = partial(compute_metrics, processor=processor)
 training_args = TrainingArguments(
       output_dir='./output',
       group_by_length=True,
-      per_device_train_batch_size=8,
-      gradient_accumulation_steps=2,
+    #   per_device_train_batch_size=8,
+      per_device_train_batch_size=2,
+      gradient_accumulation_steps=4,
       evaluation_strategy='steps',
       num_train_epochs=1,
       fp16=True,
@@ -73,4 +74,4 @@ trainer = Trainer(
 
 trainer.train()
 
-model.push_to_hub('mnazari/delete_this_later', use_temp_dir=True)
+model.push_to_hub('mnazari/delete_this_later', token='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')
