@@ -32,9 +32,9 @@ def prepare(item, processor, augment):
     waveform = resample(waveform)
 
     item['input_values'] = processor(
-            waveform[0],
-            sampling_rate=resample_rate
-        ).input_values[0]
+        waveform[0],
+        sampling_rate=resample_rate
+    ).input_values[0]
 
     with processor.as_target_processor():
         text = normalize(item['utterance'])

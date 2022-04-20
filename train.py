@@ -8,12 +8,15 @@ from datautils import prepare_dataset, load_data_collator
 
 model_path = 'm3hrdadfi/wav2vec2-large-xlsr-persian-v3'
 model_version = 'main'
-augment = True
+augment = False
 
 if len(sys.argv) == 2:
     model_path = sys.argv[1]
 if len(sys.argv) == 3:
     model_version = sys.argv[2]
+if len(sys.argv) == 4:
+    augment = 'augment' == sys.argv[3]
+
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f'Training "{model_path}@{model_version}" on "{device}".')
