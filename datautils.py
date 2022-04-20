@@ -8,11 +8,11 @@ from datacollator import DataCollatorCTCWithPadding
 
 
 augments = Compose([
-    Gain(min_gain_in_db=-12, max_gain_in_db=6, p=0.5),
-    PitchShift(min_semitones=-4, max_semitones=1, p=0.5),
-    TimeStretch(min_rate=0.75, max_rate=1.15, p=0.5),
-    RoomSimulator(p=0.25),
-    AddGaussianNoise(min_amplitude=0.001, max_amplitude=0.008, p=0.5),
+    Gain(min_gain_in_db=-12, max_gain_in_db=6, p=0.75),
+    PitchShift(min_semitones=-4, max_semitones=1, p=0.75),
+    TimeStretch(min_rate=0.75, max_rate=1.15, p=0.75),
+    RoomSimulator(p=0.5),
+    AddGaussianNoise(min_amplitude=0.001, max_amplitude=0.008, p=1),
 ])
 
 
