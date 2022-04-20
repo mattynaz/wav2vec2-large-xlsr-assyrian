@@ -73,4 +73,4 @@ trainer = Trainer(
 
 trainer.train()
 
-trainer.push_to_hub('mnazari/delete_this_later', use_temp_dir=True)
+model.push_to_hub('mnazari/delete_this_later', use_temp_dir=True)
