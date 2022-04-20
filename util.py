@@ -41,6 +41,8 @@ def load_processor(
             unk_token=unk_token,
             pad_token=pad_token,
             word_delimiter_token=word_delimiter_token,
+            eos_token=None,
+            bos_token=None,
         )
     
     os.remove(temp_path)

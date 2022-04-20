@@ -24,8 +24,9 @@ if augment:
     print('Data augmentation on.')
 print('\n')
 
-processor = Wav2Vec2Processor.from_pretrained('mnazari/wav2vec2-assyrian')
-procesor = load_processor()
+processor = load_processor()
+# processor = Wav2Vec2Processor.from_pretrained('mnazari/wav2vec2-assyrian')
+
 model = Wav2Vec2ForCTC.from_pretrained(
     model_path,
     attention_dropout=0.1,
@@ -35,7 +36,7 @@ model = Wav2Vec2ForCTC.from_pretrained(
     layerdrop=0.1,
     ctc_loss_reduction='mean', 
     pad_token_id=processor.tokenizer.pad_token_id,
-    vocab_size=len(processor.tokenizer)
+    vocab_size=processor.tokenizer.vocab_size
 )
 model.gradient_checkpointing_enable()
 
@@ -50,7 +51,7 @@ training_args = TrainingArguments(
       per_device_train_batch_size=4,
       gradient_accumulation_steps=4,
       evaluation_strategy='steps',
-      num_train_epochs=500,
+      num_train_epochs=10,
       fp16=True,
       eval_steps=50,
       logging_steps=10,
