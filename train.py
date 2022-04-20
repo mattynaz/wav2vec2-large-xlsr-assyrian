@@ -1,6 +1,6 @@
 import torch
 from functools import partial
-from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor, TrainingArguments, Trainer
+from transformers import Wav2Vec2ForCTC, TrainingArguments, Trainer
 from util import *
 import sys
 from datautils import prepare_dataset, load_data_collator
@@ -46,9 +46,13 @@ compute_metrics = partial(compute_metrics, processor=processor)
 
 training_args = TrainingArguments(
       output_dir='./output',
+      overwrite_output_dir=True,
+      push_to_hub=True,
+      hub_strategy='end',
+      hub_model_id='mnazari/delete_this_later',
       group_by_length=True,
-      per_device_train_batch_size=4,
-      gradient_accumulation_steps=4,
+      per_device_train_batch_size=2,
+      gradient_accumulation_steps=2,
       evaluation_strategy='steps',
       num_train_epochs=1,
       fp16=True,
@@ -69,4 +73,6 @@ trainer = Trainer(
   )
 
 trainer.train()
-trainer.push_to_hub('delete_this_later')
+
+processor.push_to_hub(repo_url='https://huggingface.co/mnazari/delete_this_later')
+model.push_to_hub(repo_url='https://huggingface.co/mnazari/delete_this_later')
