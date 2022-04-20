@@ -6,7 +6,7 @@ import sys
 from datautils import prepare_dataset, load_data_collator
 
 
-model_path = 'm3hrdadfi/wav2vec2-large-xlsr-persian-v3'
+model_path = 'mnazari/wav2vec2-assyrian'
 model_version = 'main'
 augment = False
 
@@ -24,11 +24,7 @@ if augment:
     print('Data augmentation on.')
 print('\n')
 
-if 'mnazarix' in model_path:
-    processor = Wav2Vec2Processor.from_pretrained(model_path, revision=model_version)
-else:
-    processor = load_processor()
-
+processor = load_processor('mnazari/wav2vec2-assyrian')
 model = Wav2Vec2ForCTC.from_pretrained(
     model_path, 
     attention_dropout=0.1,
@@ -50,15 +46,14 @@ compute_metrics = partial(compute_metrics, processor=processor)
 training_args = TrainingArguments(
       output_dir='./output',
       group_by_length=True,
-    #   per_device_train_batch_size=8,
-      per_device_train_batch_size=2,
+      per_device_train_batch_size=4,
       gradient_accumulation_steps=4,
       evaluation_strategy='steps',
-      num_train_epochs=1,
+      num_train_epochs=500,
       fp16=True,
       eval_steps=50,
       logging_steps=10,
-      learning_rate=3e-3,
+      learning_rate=2e-3,
       warmup_ratio=0.2,
   )
 
@@ -74,5 +69,4 @@ trainer = Trainer(
 
 trainer.train()
 
-processor.push_to_hub('mnazari/delete_this_later', use_temp_dir=True)
-model.push_to_hub('mnazari/delete_this_later', use_temp_dir=True)
+model.push_to_hub('mnazari/wav2vec2-assyrian')
