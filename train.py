@@ -71,6 +71,6 @@ trainer = Trainer(
       tokenizer=processor.feature_extractor,
   )
 
-trainer.train()
+# trainer.train()
 
-trainer.push_to_hub()
+trainer.push_to_hub('mnazari/delete_this_later')
