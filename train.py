@@ -51,8 +51,8 @@ training_args = TrainingArguments(
       hub_strategy='end',
       hub_model_id='mnazari/delete_this_later',
       group_by_length=True,
-      per_device_train_batch_size=2,
-      gradient_accumulation_steps=2,
+      per_device_train_batch_size=200,
+      gradient_accumulation_steps=1,
       evaluation_strategy='steps',
       num_train_epochs=1,
       fp16=True,
@@ -74,5 +74,5 @@ trainer = Trainer(
 
 trainer.train()
 
-processor.push_to_hub(repo_url='https://huggingface.co/mnazari/delete_this_later')
-model.push_to_hub(repo_url='https://huggingface.co/mnazari/delete_this_later')
+processor.push_to_hub(repo_path_or_name='mnazari/delete_this_later')
+model.push_to_hub(repo_path_or_name='mnazari/delete_this_later')
