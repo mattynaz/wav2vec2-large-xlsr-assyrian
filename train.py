@@ -25,8 +25,9 @@ if augment:
 print('\n')
 
 processor = Wav2Vec2Processor.from_pretrained('mnazari/wav2vec2-assyrian')
+procesor = load_processor()
 model = Wav2Vec2ForCTC.from_pretrained(
-    model_path, 
+    model_path,
     attention_dropout=0.1,
     hidden_dropout=0.1,
     feat_proj_dropout=0.0,
@@ -69,4 +70,8 @@ trainer = Trainer(
 
 trainer.train()
 
+print('Pushing processor to hub...')
+processor.push_to_hub('mnazari/wav2vec2-assyrian')
+
+print('Pushing model to hub...')
 model.push_to_hub('mnazari/wav2vec2-assyrian')
