@@ -10,11 +10,11 @@ model_path = 'mnazari/wav2vec2-assyrian'
 model_version = 'main'
 augment = False
 
-if len(sys.argv) == 2:
+if len(sys.argv) > 1:
     model_path = sys.argv[1]
-if len(sys.argv) == 3:
+if len(sys.argv) > 2:
     model_version = sys.argv[2]
-if len(sys.argv) == 4:
+if len(sys.argv) > 3:
     augment = 'augment' == sys.argv[3]
 
 
