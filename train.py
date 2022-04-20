@@ -4,6 +4,7 @@ from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor, TrainingArguments, T
 from util import *
 import sys
 from datautils import prepare_dataset, load_data_collator
+import huggingface_hub
 
 
 model_path = 'mnazari/wav2vec2-assyrian'
@@ -20,9 +21,7 @@ if len(sys.argv) == 4:
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f'Training "{model_path}@{model_version}" on "{device}".')
-if augment:
-    print('Data augmentation on.')
-print('\n')
+print(f'Data augmentation {"on" if augment else "false"}.\n')
 
 processor = load_processor()
 # processor = Wav2Vec2Processor.from_pretrained('mnazari/wav2vec2-assyrian')
@@ -51,7 +50,7 @@ training_args = TrainingArguments(
       per_device_train_batch_size=4,
       gradient_accumulation_steps=4,
       evaluation_strategy='steps',
-      num_train_epochs=1,
+      num_train_epochs=1000,
       fp16=True,
       eval_steps=50,
       logging_steps=10,
@@ -70,9 +69,4 @@ trainer = Trainer(
   )
 
 trainer.train()
-
-print('Pushing processor to hub...')
-processor.push_to_hub('mnazari/wav2vec2-assyrian')
-
-print('Pushing model to hub...')
-model.push_to_hub('mnazari/wav2vec2-assyrian')
+trainer.push_to_hub('wav2vec2-assyrian')
