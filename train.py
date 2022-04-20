@@ -34,7 +34,7 @@ model = Wav2Vec2ForCTC.from_pretrained(
     layerdrop=0.1,
     ctc_loss_reduction='mean', 
     pad_token_id=processor.tokenizer.pad_token_id,
-    vocab_size=processor.tokenizer.vocab_size
+    vocab_size=processor.tokenizer.vocab_size,
 )
 model.gradient_checkpointing_enable()
 
