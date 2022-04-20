@@ -1,6 +1,6 @@
 import torch
 from functools import partial
-from transformers import Wav2Vec2ForCTC, TrainingArguments, Trainer
+from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor, TrainingArguments, Trainer
 from util import *
 import sys
 from datautils import prepare_dataset, load_data_collator
@@ -24,7 +24,7 @@ if augment:
     print('Data augmentation on.')
 print('\n')
 
-processor = load_processor('mnazari/wav2vec2-assyrian')
+processor = Wav2Vec2Processor.from_pretrained('mnazari/wav2vec2-assyrian')
 model = Wav2Vec2ForCTC.from_pretrained(
     model_path, 
     attention_dropout=0.1,
