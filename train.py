@@ -8,6 +8,7 @@ import huggingface_hub
 
 
 model_path = 'mnazari/wav2vec2-assyrian'
+model_path = 'm3hrdadfi/wav2vec2-large-xlsr-persian-v3'
 model_version = 'main'
 augment = False
 
@@ -46,7 +47,7 @@ compute_metrics = partial(compute_metrics, processor=processor)
 
 training_args = TrainingArguments(
       output_dir='./output',
-    #   overwrite_output_dir=True,
+      overwrite_output_dir=True,
     #   push_to_hub=True,
     #   hub_strategy='end',
     #   hub_model_id='mnazari/delete_this_later',
@@ -74,5 +75,5 @@ trainer = Trainer(
 
 trainer.train()
 
-processor.push_to_hub(repo_path_or_name='mnazari/delete_this_later')
-model.push_to_hub(repo_path_or_name='mnazari/delete_this_later')
+processor.push_to_hub('mnazari/delete_this_later')
+model.push_to_hub('mnazari/delete_this_later')
