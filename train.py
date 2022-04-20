@@ -73,4 +73,5 @@ trainer = Trainer(
 
 # trainer.train()
 
-trainer.push_to_hub('mnazari/delete_this_later')
+hub_token = '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'
+trainer.push_to_hub('mnazari/delete_this_later', token=hub_token)

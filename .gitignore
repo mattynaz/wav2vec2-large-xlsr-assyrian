@@ -7,4 +7,5 @@ venv
 
 # Large files
 wav2vec2-nena
+output
 delete
