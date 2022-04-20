@@ -46,10 +46,10 @@ compute_metrics = partial(compute_metrics, processor=processor)
 
 training_args = TrainingArguments(
       output_dir='./output',
-      overwrite_output_dir=True,
-      push_to_hub=True,
-      hub_strategy='end',
-      hub_model_id='mnazari/delete_this_later',
+    #   overwrite_output_dir=True,
+    #   push_to_hub=True,
+    #   hub_strategy='end',
+    #   hub_model_id='mnazari/delete_this_later',
       group_by_length=True,
       per_device_train_batch_size=4,
       gradient_accumulation_steps=1,
