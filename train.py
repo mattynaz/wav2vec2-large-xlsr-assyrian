@@ -27,11 +27,16 @@ processor = load_processor()
 
 model = Wav2Vec2ForCTC.from_pretrained(
     model_path,
-    attention_dropout=0.2,
-    hidden_dropout=0.2,
-    feat_proj_dropout=0.0,
-    mask_time_prob=0.1,
-    layerdrop=0.2,
+    # attention_dropout=0.1,
+    # hidden_dropout=0.1,
+    # feat_proj_dropout=0.0,
+    # mask_time_prob=0.05,
+    # layerdrop=0.1,
+    attention_dropout=0.3,
+    hidden_dropout=0.3,
+    feat_proj_dropout=0.2,
+    mask_time_prob=0.25,
+    layerdrop=0.3,
     ctc_loss_reduction='mean', 
     pad_token_id=processor.tokenizer.pad_token_id,
     vocab_size=processor.tokenizer.vocab_size
