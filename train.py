@@ -50,14 +50,14 @@ compute_metrics = partial(compute_metrics, processor=processor)
 training_args = TrainingArguments(
       output_dir='./output',
       group_by_length=True,
-      per_device_train_batch_size=12,
-      gradient_accumulation_steps=4,
+      per_device_train_batch_size=8,
+      gradient_accumulation_steps=2,
       evaluation_strategy='steps',
       num_train_epochs=100,
       fp16=True,
       eval_steps=50,
       logging_steps=10,
-      learning_rate=3e-4,
+      learning_rate=3e-3,
       warmup_ratio=0.25,
   )
 
