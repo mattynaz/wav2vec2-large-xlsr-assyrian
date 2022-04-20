@@ -4,7 +4,6 @@ from transformers import Wav2Vec2ForCTC, TrainingArguments, Trainer
 from util import *
 import sys
 from datautils import prepare_dataset, load_data_collator
-import huggingface_hub
 
 
 model_path = 'mnazari/wav2vec2-assyrian'
@@ -48,16 +47,13 @@ compute_metrics = partial(compute_metrics, processor=processor)
 training_args = TrainingArguments(
       output_dir='./output',
       overwrite_output_dir=True,
-    #   push_to_hub=True,
-    #   hub_strategy='end',
-    #   hub_model_id='mnazari/delete_this_later',
       group_by_length=True,
-      per_device_train_batch_size=4,
-      gradient_accumulation_steps=1,
+      per_device_train_batch_size=12,
+      gradient_accumulation_steps=2,
       evaluation_strategy='steps',
       num_train_epochs=1,
       fp16=True,
-      eval_steps=50,
+      eval_steps=750,
       logging_steps=10,
       learning_rate=2e-3,
       warmup_ratio=0.2,
@@ -75,5 +71,5 @@ trainer = Trainer(
 
 trainer.train()
 
-processor.push_to_hub('mnazari/delete_this_later')
-model.push_to_hub('mnazari/delete_this_later')
+processor.push_to_hub('mnazari/wav2vec2-assyrian')
+model.push_to_hub('mnazari/wav2vec2-assyrian')
