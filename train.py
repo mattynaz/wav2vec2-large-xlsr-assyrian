@@ -50,7 +50,7 @@ training_args = TrainingArguments(
       per_device_train_batch_size=4,
       gradient_accumulation_steps=4,
       evaluation_strategy='steps',
-      num_train_epochs=1000,
+      num_train_epochs=1,
       fp16=True,
       eval_steps=50,
       logging_steps=10,
@@ -69,4 +69,4 @@ trainer = Trainer(
   )
 
 trainer.train()
-trainer.push_to_hub('wav2vec2-assyrian')
+trainer.push_to_hub('delete_this_later')
