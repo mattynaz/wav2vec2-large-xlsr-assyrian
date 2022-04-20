@@ -8,6 +8,7 @@ from datautils import prepare_dataset, load_data_collator
 
 model_path = 'm3hrdadfi/wav2vec2-large-xlsr-persian-v3'
 model_version = 'main'
+augment = True
 
 if len(sys.argv) == 2:
     model_path = sys.argv[1]
@@ -16,6 +17,9 @@ if len(sys.argv) == 3:
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f'Training "{model_path}@{model_version}" on "{device}".')
+if augment:
+    print('Data augmentation on.')
+print('\n')
 
 if 'mnazarix' in model_path:
     processor = Wav2Vec2Processor.from_pretrained(model_path, revision=model_version)
@@ -36,7 +40,7 @@ model = Wav2Vec2ForCTC.from_pretrained(
 model.gradient_checkpointing_enable()
 
 dataset = load_dataset('mnazari/urmi-assyrian-voice')
-prepare_dataset(dataset, processor, augment=False, num_proc=16)
+dataset = prepare_dataset(dataset, processor, augment=augment, num_proc=16)
 data_collator = load_data_collator(processor)
 compute_metrics = partial(compute_metrics, processor=processor)
 
