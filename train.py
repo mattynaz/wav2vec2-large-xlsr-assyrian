@@ -7,7 +7,6 @@ from datautils import prepare_dataset, load_data_collator
 
 
 model_path = 'mnazari/wav2vec2-assyrian'
-model_path = 'm3hrdadfi/wav2vec2-large-xlsr-persian-v3'
 model_version = 'main'
 augment = False
 
