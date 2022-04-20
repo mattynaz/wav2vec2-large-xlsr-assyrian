@@ -27,11 +27,11 @@ processor = load_processor()
 
 model = Wav2Vec2ForCTC.from_pretrained(
     model_path,
-    attention_dropout=0.1,
-    hidden_dropout=0.1,
+    attention_dropout=0.2,
+    hidden_dropout=0.2,
     feat_proj_dropout=0.0,
-    mask_time_prob=0.05,
-    layerdrop=0.1,
+    mask_time_prob=0.1,
+    layerdrop=0.2,
     ctc_loss_reduction='mean', 
     pad_token_id=processor.tokenizer.pad_token_id,
     vocab_size=processor.tokenizer.vocab_size
@@ -47,14 +47,14 @@ training_args = TrainingArguments(
       output_dir='./output',
       overwrite_output_dir=True,
       group_by_length=True,
-      per_device_train_batch_size=8,
+      per_device_train_batch_size=4,
       gradient_accumulation_steps=2,
       evaluation_strategy='steps',
-      num_train_epochs=50,
+      num_train_epochs=75,
       fp16=True,
       eval_steps=50,
       logging_steps=10,
-      learning_rate=3e-4,
+      learning_rate=5e-3,
       warmup_ratio=0.2,
   )
 
