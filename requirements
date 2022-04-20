@@ -7,3 +7,4 @@ jiwer
 audiomentations
 numpy
 pyroomacoustics
+huggingface_hub
