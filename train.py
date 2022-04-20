@@ -50,11 +50,11 @@ training_args = TrainingArguments(
       per_device_train_batch_size=12,
       gradient_accumulation_steps=3,
       evaluation_strategy='steps',
-      num_train_epochs=100,
+      num_train_epochs=50,
       fp16=True,
       eval_steps=50,
       logging_steps=10,
-      learning_rate=2e-3,
+      learning_rate=3e-3,
       warmup_ratio=0.2,
   )
 
