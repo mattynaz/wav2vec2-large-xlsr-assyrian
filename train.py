@@ -70,5 +70,5 @@ trainer = Trainer(
 
 trainer.train()
 
-processor.push_to_hub('mnazari/wav2vec2-assyrian')
-model.push_to_hub('mnazari/wav2vec2-assyrian')
+processor.push_to_hub('mnazari/delete_this_later')
+model.push_to_hub('mnazari/delete_this_later')
