@@ -23,7 +23,7 @@ print(f'Training "{model_path}@{model_version}" on "{device}".')
 print(f'Data augmentation {"on" if augment else "false"}.\n')
 
 processor = load_processor()
-# processor = Wav2Vec2Processor.from_pretrained('mnazari/wav2vec2-assyrian')
+# processor = Wav2Vec2Processor.from_pretrained('mnazari/delete_this_later')
 
 model = Wav2Vec2ForCTC.from_pretrained(
     model_path,
@@ -70,5 +70,5 @@ trainer = Trainer(
 
 trainer.train()
 
-processor.push_to_hub('mnazari/delete_this_later')
-model.push_to_hub('mnazari/delete_this_later')
+processor.push_to_hub('mnazari/wav2vec2-assyrian')
+model.push_to_hub('mnazari/wav2vec2-assyrian')
