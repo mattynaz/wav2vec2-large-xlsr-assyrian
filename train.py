@@ -52,9 +52,9 @@ training_args = TrainingArguments(
       evaluation_strategy='steps',
       num_train_epochs=75,
       fp16=True,
-      eval_steps=100,
-      logging_steps=25,
-      learning_rate=3e-4,
+      eval_steps=200,
+      logging_steps=50,
+      learning_rate=1e-4,
       warmup_ratio=0.2,
   )
 
