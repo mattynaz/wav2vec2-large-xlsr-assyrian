@@ -54,7 +54,7 @@ training_args = TrainingArguments(
       fp16=True,
       eval_steps=200,
       logging_steps=50,
-      learning_rate=1e-4,
+      learning_rate=6e-5,
       warmup_ratio=0.2,
   )
 
