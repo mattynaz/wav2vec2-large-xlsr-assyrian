@@ -44,9 +44,14 @@ def prepare(item, processor, augment):
 
 
 def prepare_dataset(dataset, processor, augment=True, num_proc=16):
-    dataset = dataset.map(
+    dataset['train'] = dataset['train'].map(
         partial(prepare, processor=processor, augment=augment),
         remove_columns=dataset.column_names['train'],
+        num_proc=num_proc,
+    )
+    dataset['test'] = dataset['test'].map(
+        partial(prepare, processor=processor, augment=False),
+        remove_columns=dataset.column_names['test'],
         num_proc=num_proc,
     )
     return dataset
