@@ -106,7 +106,7 @@ strip_res = [
 ]
 
 
-def normalize(text: str, panic: bool = True) -> str:
+def normalize(text: str, panic: bool = False) -> str:
     '''
     Normalize transcription of `text`. If `panic`,
     will panic
