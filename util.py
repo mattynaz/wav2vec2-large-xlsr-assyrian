@@ -37,28 +37,28 @@ def load_processor(
         json.dump(vocab, f)
 
     tokenizer = Wav2Vec2CTCTokenizer(
-            temp_path,
-            unk_token=unk_token,
-            pad_token=pad_token,
-            word_delimiter_token=word_delimiter_token,
-            eos_token=None,
-            bos_token=None,
-        )
-    
+        temp_path,
+        unk_token=unk_token,
+        pad_token=pad_token,
+        word_delimiter_token=word_delimiter_token,
+        eos_token=None,
+        bos_token=None,
+    )
+
     os.remove(temp_path)
 
     feature_extractor = Wav2Vec2FeatureExtractor(
-            feature_size=1,
-            sampling_rate=16000,
-            padding_value=0.0,
-            do_normalize=True,
-            return_attention_mask=False,
-        )
+        feature_size=1,
+        sampling_rate=16000,
+        padding_value=0.0,
+        do_normalize=True,
+        return_attention_mask=False,
+    )
 
     processor = Wav2Vec2Processor(
-            feature_extractor=feature_extractor,
-            tokenizer=tokenizer,
-        )
+        feature_extractor=feature_extractor,
+        tokenizer=tokenizer,
+    )
 
     return processor
 
@@ -93,15 +93,15 @@ def load_nena_dataset(processor, data_files='nena_dataset.json', augment=True, d
 
         resample_rate = 16000
         resample = torchaudio.transforms.Resample(
-                orig_freq=sample_rate,
-                new_freq=resample_rate
-            )
+            orig_freq=sample_rate,
+            new_freq=resample_rate
+        )
         waveform = resample(waveform)
 
         item['input_values'] = processor(
-                waveform[0],
-                sampling_rate=resample_rate
-            ).input_values[0]
+            waveform[0],
+            sampling_rate=resample_rate
+        ).input_values[0]
 
         with processor.as_target_processor():
             text = normalize(item['utterance'])
@@ -110,10 +110,10 @@ def load_nena_dataset(processor, data_files='nena_dataset.json', augment=True, d
         return item
 
     dataset = dataset.map(
-            prepare,
-            remove_columns=dataset.column_names['train'],
-            num_proc=8,
-        )
+        prepare,
+        remove_columns=dataset.column_names['train'],
+        num_proc=8,
+    )
 
     if test_split > 0:
         dataset = dataset['train'].train_test_split(test_size=test_split)

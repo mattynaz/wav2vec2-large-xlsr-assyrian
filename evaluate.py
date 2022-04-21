@@ -22,7 +22,7 @@ resample = torchaudio.transforms.Resample(
 )
 waveform = resample(waveform)
 
-features = processor(waveform[0], sampling_rate=16_000, return_tensors='pt', padding=True).input_values
+features = processor(waveform[0], sampling_rate=16000, return_tensors='pt', padding=True).input_values
 
 with torch.no_grad():
     logits = model(features).logits
